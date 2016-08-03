@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import utils.AjaxMessage;
+import utils.CryptoUtils;
 import utils.StringUtil;
 
 import javax.servlet.http.HttpServletRequest;
@@ -33,13 +34,20 @@ public class UserController {
     }
 
     @RequestMapping(value = "/regist", method = RequestMethod.POST)
-    public String codeImg(ModelMap modelMap, User user, HttpServletRequest request,String code){
+    public String regist(ModelMap modelMap, User user, HttpServletRequest request,String code){
         String codeImg = (String) request.getSession().getAttribute("codeImg");
+        User u = new User();
         if(!StringUtil.isEmpty(code) && code.equals(codeImg)){
             user.setUid(UUID.randomUUID().toString());
             try {
-                userService.addUser(user);
-                modelMap.addAttribute("user", user);
+                String salt = CryptoUtils.getSalt();
+                String password = user.getPassword();
+                u.setUsername(user.getUsername());
+                u.setUid(salt);
+                u.setPassword(CryptoUtils.getHash(password, salt));
+                userService.addUser(u);
+                u.setPassword("");
+                modelMap.addAttribute("user", u);
                 modelMap.addAttribute("msg", "注册成功了，可以去登陆了");
                 return "success";
             }catch (Exception e){
@@ -49,6 +57,28 @@ public class UserController {
             }
         }
         return "error";
+    }
+
+    @RequestMapping(value = "/toLogin", method = RequestMethod.POST)
+    public String login(ModelMap modelMap, User user, HttpServletRequest request,String code){
+        String codeImg = (String) request.getSession().getAttribute("codeImg");
+        User u = userService.findByUser(user);
+        if(!StringUtil.isEmpty(code) && code.equals(codeImg) && u !=null){
+            String password = user.getPassword();
+            String hashPassword = u.getPassword();
+            String salt = u.getUid();
+            Boolean b = CryptoUtils.verify(hashPassword, password, salt);
+            if(b){
+                request.getSession().setAttribute("user",u);
+                modelMap.addAttribute("user", u);
+                modelMap.addAttribute("msg", "登录成功！");
+                return "success";
+            }
+            modelMap.addAttribute("msg", "用户名或密码错误！");
+            return "login";
+        }
+        modelMap.addAttribute("msg", "用户名或密码错误！");
+        return "login";
     }
 
     @RequestMapping(value = "/verification", method = RequestMethod.POST)

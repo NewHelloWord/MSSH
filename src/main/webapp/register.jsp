@@ -41,7 +41,7 @@
                     <div class="control-group">
                         <div class="controls">
                             <label for="username" class="control-label fa fa-envelope"></label>
-                            <input id="username" type="text" name="username" placeholder="Email" tabindex="1" autofocus="autofocus" class="form-control input-medium">
+                            <input id="username" type="text" name="username" placeholder="userName" tabindex="1" autofocus="autofocus" class="form-control input-medium">
                         </div>
                     </div>
                     <div class="control-group">
@@ -63,7 +63,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="form-actions"><a href="" tabindex="5" class="btn pull-left btn-link text-muted" style="color: #999;">忘记密码?</a><a href="" tabindex="6" class="btn btn-link text-muted" style="color: #999;">登录</a>
+                <div class="form-actions"><a href="" tabindex="5" class="btn pull-left btn-link text-muted" style="color: #999;">忘记密码?</a><a href="/login.jsp" tabindex="6" class="btn btn-link text-muted" style="color: #999;">登录</a>
                     <button type="submit" tabindex="4" class="btn btn-primary">注册</button>
                 </div>
             </form>

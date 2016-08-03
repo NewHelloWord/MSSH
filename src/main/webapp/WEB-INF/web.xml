@@ -45,6 +45,6 @@
     <session-timeout>10</session-timeout>
   </session-config>
   <welcome-file-list>
-    <welcome-file>register.jsp</welcome-file>
+    <welcome-file>login.jsp</welcome-file>
   </welcome-file-list>
 </web-app>

@@ -16,13 +16,13 @@ public class User implements Serializable {
     @Column(name = "id", nullable = false, length = 11)
     private int id;
 
-    @Column(name = "uid", nullable = false, length = 36)
+    @Column(name = "uid", nullable = false, length = 50)
     private String uid;
 
     @Column(name = "username", unique = false, nullable = false, length = 100)
     private String username;
 
-    @Column(name="password",nullable=false,length=20)
+    @Column(name="password",nullable=false,length=100)
     private String password;
 
     @Transient

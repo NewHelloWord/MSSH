@@ -10,4 +10,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 public interface UserService {
 
     public void addUser(User user) ;
+
+    public User findByUser(User user);
 }
