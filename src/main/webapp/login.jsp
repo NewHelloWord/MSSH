@@ -60,9 +60,11 @@
                     <div class="control-group">
                         <div class="controls">
                             <span iname="err" class="errorMsg">验证码错误</span>
+                            <span style="color: red" id="emsg">${msg}</span>
                         </div>
                     </div>
                 </div>
+
                 <div class="form-actions"><a href="" tabindex="5" class="btn pull-left btn-link text-muted" style="color: #999;">忘记密码?</a><a href="/register.jsp" tabindex="6" class="btn btn-link text-muted" style="color: #999;">注册</a>
                     <button type="submit" tabindex="4" class="btn btn-primary">登录</button>
                 </div>
@@ -98,12 +100,15 @@
 
             $(".errorMsg").hide();
 
+
             if(username.length == 0){
                 $("span[iname='err']").text("用户名有误！").show();
+                $("#emsg").hide();
                 return false;
             }
             if(password.length == 0){
                 $("span[iname='err']").text("密码有误！").show();
+                $("#emsg").hide();
                 return false;
             }
 
@@ -118,7 +123,9 @@
                     console.log(data);
                     console.log(data.success);
                     if(!data.success) {
+                        $("#emsg").hide();
                         $("span[iname='err']").text("验证码错误！").show();
+
                         flag = false;
                         changeImg();
                     }
@@ -128,8 +135,8 @@
                     alert(data.success);
                 }
             });
-
             return flag;
+            $("#emsg").show();
 
         }
 

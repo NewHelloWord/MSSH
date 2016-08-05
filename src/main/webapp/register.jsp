@@ -54,7 +54,8 @@
                         <div class="controls">
                             <%--<label for="password" class="control-label fa fa-asterisk"></label>--%>
                             <input id="code" type="text" name="code" placeholder="Code" tabindex="3" class="form-control input-medium" style="width: 48%">
-                            <img src="/code.htm" id="codeImg" style="width: 45%;height: 40px;float: right; margin-top: -40px;">
+                            <%--<img src="/code.htm" id="codeImg" style="width: 45%;height: 40px;float: right; margin-top: -40px;">--%>
+                            <input id="phoneCode" class="icode" type="button" value="获取验证码" style="width: 45%;height: 40px;float: right; margin-top: -40px;border: 0;background-color: #6a8fb2;">
                         </div>
                     </div>
                     <div class="control-group">
@@ -85,18 +86,94 @@
                 $('#owl-login').removeClass('password');
             });
 
+            $("#phoneCode").on("click",function(){
 
-            $("#codeImg").on("click",function(){
-                changeImg();
             });
 
 
         });
 
+        var InterObj;
+        var count = 120;
+        var now;
+
+        $(".icode").click(function(){
+            if(!checkMobile()){return;}
+            $(".icode").attr("disabled","disabled");
+
+            //后台生成验证码
+            $.ajax({
+                type: 'POST',
+                url: 'mobile.htm',
+                data: {mobile:$.trim($("#username").val())},
+                dataType:'json',
+                success: function(data){
+                    data = $.parseJSON(data);
+                    if(data.success==true) {
+                        now = count;
+                        $("#code").val("");
+                        $("#code").focus();
+                        $(".icode").text("剩余 "+now+" s");
+                        InterObj = setInterval(SetRemainTime,1000);
+                    } else {
+                        $(".icode").removeAttr("disabled");
+                        $("span[iname='err']").text(data.msg).show();
+//                        if(data.state==1) {
+//                            $("#mInfo").show();
+//                            $("#username").focus();
+//                        }
+                    }
+                },
+                error : function(strValue) {
+                }
+            });
+
+        });
+
+        function SetRemainTime(){
+            if(now==0){
+                clearInterval(InterObj);
+                $(".icode").removeAttr("disabled").val("获取验证码");
+            }else{
+                now--;
+                $(".icode").val("剩余 "+now+" s");
+            }
+        }
+
+
+        //手机号码验证
+        function checkMobile(){
+            var mobile = $.trim($("#username").val());
+            var reg = new RegExp("^1[3|4|5|8|7][0-9]\\d{8}$");
+            if (false == reg.test(mobile)) {
+                $("span[iname='err']").text("手机格式不正确！").show();
+                $("#username").focus();
+                return false;
+            } else {
+                $("span[iname='err']").hide();
+                return true;
+            }
+        }
+
+        //验证码验证
+        function checkYzm(){
+            var yzm = $("#code").val();
+            if ($.trim(yzm).length<6) {
+                $("#code").val("");
+                $("#code").focus();
+                $("span[iname='err']").text("请输入6位数字验证码！").show();
+                return false;
+            } else {
+                $("span[iname='err']").hide();
+                return true;
+            }
+        }
+
         function checkReg(){
 
             var username = $("#username").val();
             var password = $("#password").val();
+            var yzm = $("#code").val();
             var flag = true;
 
             $(".errorMsg").hide();
@@ -109,37 +186,17 @@
                 $("span[iname='err']").text("密码有误！").show();
                 return false;
             }
-
-            $.ajax( {
-                url : "verification.htm?r="+Math.random(),
-                dataType : "json",
-                type : "post",
-                data : {"code":$("#code").val()},
-                async:false,
-                success : function(data) {
-                    data = $.parseJSON(data);
-                    console.log(data);
-                    console.log(data.success);
-                    if(!data.success) {
-                        $("span[iname='err']").text("验证码错误！").show();
-                        flag = false;
-                        changeImg();
-                    }
-                },
-                error : function(data) {
-                    alert("error");
-                    alert(data.success);
-                }
-            });
-
+            if ($.trim(yzm).length<6) {
+                $("#code").val("");
+                $("#code").focus();
+                $("span[iname='err']").text("请输入6位数字验证码！").show();
+                return false;
+            } else {
+                $("span[iname='err']").hide();
+                return true;
+            }
             return flag;
 
-        }
-
-        function changeImg()
-        {
-            var imgObj = document.getElementById("codeImg");
-            imgObj.src = "code.htm?ran=" + Math.random();
         }
 
 
