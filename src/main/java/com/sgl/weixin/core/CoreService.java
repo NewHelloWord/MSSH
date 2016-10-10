@@ -19,13 +19,13 @@ public class CoreService {
         try {
             Map<String,Object> map = MessageUtil.parseXml(request);
 
-            String ToUserName = (String) map.get("ToUserName");      //开发者微信号
-            String fromUserName = (String) map.get("FromUserName");  //发送方帐号（一个OpenID）
-            Long CreateTime = (Long)map.get("CreateTime");       //消息创建时间 （整型）
+            //String ToUserName = (String) map.get("ToUserName");      //开发者微信号
+            //String fromUserName = (String) map.get("FromUserName");  //发送方帐号（一个OpenID）
+            //Long CreateTime = (Long)map.get("CreateTime");       //消息创建时间 （整型）
             String MsgType = (String)map.get("MsgType");             //消息类型
 
-            BaseMessage bs = new BaseMessage(ToUserName,fromUserName,CreateTime,MsgType,0);
-            resMessage = DealMessage.dealMessage(MsgType,bs);
+            //BaseMessage bs = new BaseMessage(ToUserName,fromUserName,0,MsgType,0);
+            resMessage = DealMessage.dealMessage(MsgType,map);
 
         } catch (Exception e) {
             e.printStackTrace();

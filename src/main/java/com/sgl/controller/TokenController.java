@@ -38,36 +38,32 @@ public class TokenController {
         BufferedReader in = null;
         String result = "";
         PrintWriter out = null;
+        String show = "";
 
         try {
             request.setCharacterEncoding("UTF-8");
             response.setCharacterEncoding("UTF-8");
-            in = new BufferedReader(new InputStreamReader(request.getInputStream()));
-            out = response.getWriter();
+//            in = new BufferedReader(new InputStreamReader(request.getInputStream()));
+//            String line = "";
+//            while ((line = in.readLine()) != null){
+//                show += line;
+//            }
+//            System.out.println(show);
 
+            out = response.getWriter();
             // 调用核心业务类接收消息、处理消息
             CoreService coreService = new CoreService();
             result = coreService.processRequest(request,session);
             out.print(result);
             out.flush();
 
-            String line = "";
-            while ((line = in.readLine()) != null){
-                result += line;
-            }
-            System.out.println(result);
+
+
         } catch (IOException e) {
             e.printStackTrace();
         }finally {
-            try {
-                if(in != null){
-                    in.close();
-                }
-                if(out != null){
-                    out.close();
-                }
-            } catch (IOException e) {
-                e.printStackTrace();
+            if(out != null){
+                out.close();
             }
         }
     }
