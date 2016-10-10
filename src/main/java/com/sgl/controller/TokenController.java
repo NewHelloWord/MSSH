@@ -1,12 +1,14 @@
 package com.sgl.controller;
 
 import com.sgl.weixin.SignUtil;
+import com.sgl.weixin.core.CoreService;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.*;
 
 @Controller
@@ -32,14 +34,23 @@ public class TokenController {
     }
 
     @RequestMapping(value = "/checkToken.htm", method = RequestMethod.POST, produces = "application/xml;charset=UTF-8")
-    public void getMessage(HttpServletRequest request, HttpServletResponse response){
+    public void getMessage(HttpServletRequest request, HttpServletResponse response, HttpSession session){
         BufferedReader in = null;
         String result = "";
+        PrintWriter out = null;
 
         try {
             request.setCharacterEncoding("UTF-8");
             response.setCharacterEncoding("UTF-8");
             in = new BufferedReader(new InputStreamReader(request.getInputStream()));
+            out = response.getWriter();
+
+            // 调用核心业务类接收消息、处理消息
+            CoreService coreService = new CoreService();
+            result = coreService.processRequest(request,session);
+            out.print(result);
+            out.flush();
+
             String line = "";
             while ((line = in.readLine()) != null){
                 result += line;
@@ -51,6 +62,9 @@ public class TokenController {
             try {
                 if(in != null){
                     in.close();
+                }
+                if(out != null){
+                    out.close();
                 }
             } catch (IOException e) {
                 e.printStackTrace();

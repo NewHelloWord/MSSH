@@ -1,5 +1,6 @@
 package com.sgl.weixin;
 
+import com.sgl.weixin.message.TextMessage;
 import com.thoughtworks.xstream.XStream;
 import com.thoughtworks.xstream.core.util.QuickWriter;
 import com.thoughtworks.xstream.io.HierarchicalStreamWriter;
@@ -83,6 +84,18 @@ public class MessageUtil {
      * 事件类型：CLICK(自定义菜单点击事件)
      */
     public static final String EVENT_TYPE_CLICK = "CLICK";
+
+
+    /**
+     * 文本消息对象转换成xml
+     *
+     * @param textMessage 文本消息对象
+     * @return xml
+     */
+    public static String textMessageToXml(TextMessage textMessage){
+        xstream.alias("xml",TextMessage.class);
+        return xstream.toXML(textMessage);
+    }
 
     /**
      * 解析微信发来的请求（XML）

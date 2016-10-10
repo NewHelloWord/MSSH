@@ -18,10 +18,20 @@ public class BaseMessage {
     private String MsgType;
 
     //消息id，64位整型
-    private long MsgId;
+    //private long MsgId;
 
     // 位0x0001被标志时，星标刚收到的消息
     private int FuncFlag;
+
+    public BaseMessage(){}
+
+    public BaseMessage(String toUserName, String fromUserName, long createTime, String msgType, int funcFlag) {
+        ToUserName = toUserName;
+        FromUserName = fromUserName;
+        CreateTime = createTime;
+        MsgType = msgType;
+        FuncFlag = funcFlag;
+    }
 
     public String getToUserName() {
         return ToUserName;
@@ -55,13 +65,13 @@ public class BaseMessage {
         MsgType = msgType;
     }
 
-    public long getMsgId() {
-        return MsgId;
-    }
-
-    public void setMsgId(long msgId) {
-        MsgId = msgId;
-    }
+//    public long getMsgId() {
+//        return MsgId;
+//    }
+//
+//    public void setMsgId(long msgId) {
+//        MsgId = msgId;
+//    }
 
     public int getFuncFlag() {
         return FuncFlag;
