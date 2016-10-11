@@ -25,6 +25,10 @@ public class DealEventMessage {
             tm.setMsgType(MessageUtil.REQ_MESSAGE_TYPE_TEXT);
             msg = MessageUtil.textMessageToXml(tm);
 
+        }else if(msgType.equals(MessageUtil.EVENT_TYPE_UNSUBSCRIBE)){
+
+        }else if(msgType.equals(MessageUtil.EVENT_TYPE_CLICK)){
+
         }
 
         return msg;
