@@ -1,10 +1,8 @@
 package com.sgl.weixin.core;
 
 import com.sgl.weixin.MessageUtil;
-import com.sgl.weixin.message.BaseMessage;
 import com.sgl.weixin.message.TextMessage;
 
-import javax.servlet.http.HttpServletRequest;
 import java.util.Date;
 import java.util.Map;
 
@@ -13,10 +11,10 @@ import java.util.Map;
  */
 public class DealEventMessage {
 
-    public static String dealMessage(String msgType, Map<String,Object> map) {
+    public static String dealMessage(String msgType, Map<String, Object> map) {
         String msg = "";
         String event = (String) map.get("Event");
-        if(event.equals(MessageUtil.EVENT_TYPE_SUBSCRIBE)){
+        if (event.equals(MessageUtil.EVENT_TYPE_SUBSCRIBE)) {
             TextMessage tm = new TextMessage();
             tm.setContent("Welcome");
             tm.setCreateTime(new Date().getTime());
@@ -25,9 +23,9 @@ public class DealEventMessage {
             tm.setMsgType(MessageUtil.REQ_MESSAGE_TYPE_TEXT);
             msg = MessageUtil.textMessageToXml(tm);
 
-        }else if(msgType.equals(MessageUtil.EVENT_TYPE_UNSUBSCRIBE)){
+        } else if (msgType.equals(MessageUtil.EVENT_TYPE_UNSUBSCRIBE)) {
 
-        }else if(msgType.equals(MessageUtil.EVENT_TYPE_CLICK)){
+        } else if (msgType.equals(MessageUtil.EVENT_TYPE_CLICK)) {
 
         }
 
