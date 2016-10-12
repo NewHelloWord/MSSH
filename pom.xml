@@ -116,6 +116,13 @@
       <version>1.4.9</version>
     </dependency>
 
+    <!-- https://mvnrepository.com/artifact/org.apache.httpcomponents/httpclient -->
+    <dependency>
+      <groupId>org.apache.httpcomponents</groupId>
+      <artifactId>httpclient</artifactId>
+      <version>4.5.2</version>
+    </dependency>
+
   </dependencies>
   <build>
     <finalName>MSSH</finalName>
