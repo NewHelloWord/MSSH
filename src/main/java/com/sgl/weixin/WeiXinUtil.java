@@ -59,7 +59,8 @@ public class WeiXinUtil {
     public static void main(String[] args){
         //AccessToken at = getAccessToken("wx3c82aa68d1ec8686","09b9812e539d726697444a776d0626b0");
         //String s = "{\"button\":[{\"type\":\"click\",\"name\":\"今日歌曲\",\"key\":\"V1001_TODAY_MUSIC\"},{\"name\":\"菜单\",\"sub_button\":[{\"type\":\"view\",\"name\":\"搜索\",\"url\":\"http://www.soso.com/\"},{\"type\":\"view\",\"name\":\"视频\",\"url\":\"http://v.qq.com/\"},{\"type\":\"click\",\"name\":\"赞一下我们\",\"key\":\"V1001_GOOD\"}]}]}";
-        String token = "hkbJ1n5aWKf3jHZgF4dP_hjef9TdGhLZhh2CzgkKTZErOfATm0h-09MIcEQG3Mn3G69jAMhyVAL3UsM8RZh5ZURi-wtBvWJyreIvR5l3biQVd1BnrjuRFI0sy8lBk9eDSNTgACAXSY";
+
+        String token = "A_hTtFobMbEtVnJkhLzR4nJPOcM9MGvM2HmGVjoAhTN7gaZUmyLeFVVLX2pOwEkHYWhhwnn3Y5AmK-xqF44H_Y-yLvuHucMYuwzY0khxzBARXDcAGAYEK";
         String requestUrl = create_menu_url.replace("ACCESS_TOKEN", token);
 
         Button b = new Button();
@@ -68,9 +69,10 @@ public class WeiXinUtil {
         b.setUrl("http://www.douyu.com/");
 
         Button b2 = new Button();
-        b2.setName("数学");
-        b2.setType("view");
-        b2.setUrl("http://www.soso.com/");
+        b2.setName("鬼刀");
+        b2.setType("click");
+        //b2.setUrl("http://www.soso.com/");
+        b2.setKey("green");
 
         Button bu = new Button();
         bu.setName("在线影院");
@@ -79,7 +81,7 @@ public class WeiXinUtil {
         bu.setSub_button(list);
 
         Button bu1 = new Button();
-        bu1.setName("初中");
+        bu1.setName("快点我哦");
         List<Button> list1 = new ArrayList<Button>();
         list1.add(b2);
         list1.add(b);
