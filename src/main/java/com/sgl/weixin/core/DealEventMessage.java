@@ -7,7 +7,7 @@ import java.util.Date;
 import java.util.Map;
 
 /**
- * Created by yaoliao on 2016/10/10.
+ * Created by JerryMouse on 2016/10/12.
  */
 public class DealEventMessage {
 
@@ -15,6 +15,7 @@ public class DealEventMessage {
         String msg = "";
         String event = (String) map.get("Event");
         if (event.equals(MessageUtil.EVENT_TYPE_SUBSCRIBE)) {
+
             TextMessage tm = new TextMessage();
             tm.setContent("Welcome");
             tm.setCreateTime(new Date().getTime());
@@ -23,9 +24,10 @@ public class DealEventMessage {
             tm.setMsgType(MessageUtil.REQ_MESSAGE_TYPE_TEXT);
             msg = MessageUtil.textMessageToXml(tm);
 
-        } else if (msgType.equals(MessageUtil.EVENT_TYPE_UNSUBSCRIBE)) {
+        } else if (event.equals(MessageUtil.EVENT_TYPE_UNSUBSCRIBE)) {
 
-        } else if (msgType.equals(MessageUtil.EVENT_TYPE_CLICK)) {
+        } else if (event.equals(MessageUtil.EVENT_TYPE_CLICK)) {
+
 
         }
 
