@@ -119,7 +119,7 @@
                 data : {"code":$("#code").val()},
                 async:false,
                 success : function(data) {
-                    data = $.parseJSON(data);
+//                    data = $.parseJSON(data);
                     console.log(data);
                     console.log(data.success);
                     if(!data.success) {
